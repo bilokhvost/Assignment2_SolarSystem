@@ -1,0 +1,25 @@
+{
+  "name": "comp392-assignment 02",
+  "authors": [
+    "Kateryna Bilokhvost"
+  ],
+  "description": "COMP392-Assignment2-Solar System",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "https://github.com/bilokhvost/Assignment2_SolarSystem.git",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "Scripts/lib"
+  ],
+  "dependencies": {
+    "three.js": "threejs#*",
+    "dat-gui": "~0.5.1",
+    "stats.js": "*",
+    "threex.colliders": "*"
+  }
+}

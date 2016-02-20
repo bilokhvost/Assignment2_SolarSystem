@@ -1,0 +1,32 @@
+{
+  "name": "comp392-assignment2",
+  "version": "1.0.0",
+  "description": "COMP392-Assignment2-Solar System",
+  "main": "game.js",
+  "dependencies": {
+    "typescript": "^1.7.5"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-connect": "^2.3.1",
+    "gulp-debug": "^2.1.2",
+    "gulp-inject": "^3.0.0",
+    "gulp-open": "^1.0.0",
+    "gulp-sourcemap": "^1.0.1",
+    "gulp-typescript": "^2.11.0",
+    "gulp-util": "^3.0.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bilokhvost/Assignment2_SolarSystem.git"
+  },
+  "author": "Kateryna Bilokhvost",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bilokhvost/Assignment2_SolarSystem/issues"
+  },
+  "homepage": "https://github.com/bilokhvost/Assignment2_SolarSystem#readme"
+}
