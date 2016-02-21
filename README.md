@@ -1,3 +1,3 @@
-#COMP392-Lab3 (Bilokhvost)
+#COMP392-Assignment2 (Bilokhvost)
 
-COMP392-Lab 3 for COMP392 - Advanced Graphics @ Centennial College
+COMP392-Assignment2-Solar System - Advanced Graphics @ Centennial College

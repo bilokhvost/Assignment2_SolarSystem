@@ -32,6 +32,7 @@ var renderer;
 var camera;
 var axes;
 var cube;
+var childCube;
 var plane;
 var sphere;
 var ambientLight;
@@ -51,20 +52,17 @@ function init() {
     axes = new AxisHelper(10);
     scene.add(axes);
     console.log("Added Axis Helper to scene...");
-    //Add a Plane to the Scene
-    plane = new gameObject(new PlaneGeometry(20, 20, 1, 1), new LambertMaterial({ color: 0xffff00 }), 0, 0, 0);
-    plane.rotation.x = -0.5 * Math.PI;
-    scene.add(plane);
-    console.log("Added Plane Primitive to scene...");
-    //Add a Cube to the Scene
-    cubeMaterial = new LambertMaterial({ color: 0x00ff00 });
-    cubeGeometry = new CubeGeometry(2, 2, 2);
-    cube = new Mesh(cubeGeometry, cubeMaterial);
+    //Add a sphere to the Scene
+    cube = new gameObject(new SphereGeometry(2, 50, 50), new LambertMaterial({ color: 0x00ff00 }), 0, 2, 0);
     cube.castShadow = true;
     cube.receiveShadow = true;
-    cube.position.y = 1;
     scene.add(cube);
-    console.log("Added Cube Primitive to scene...");
+    console.log("Added sphere Primitive to scene...");
+    childCube = new gameObject(new SphereGeometry(0.5, 50, 50), new LambertMaterial({ color: 0xff0000 }), 5, 1, 0);
+    childCube.castShadow = true;
+    childCube.receiveShadow = true;
+    cube.add(childCube);
+    console.log("Added Child Cube Primitive to scene...");
     // Add an AmbientLight to the scene
     ambientLight = new AmbientLight(0x090909);
     scene.add(ambientLight);
@@ -72,6 +70,7 @@ function init() {
     // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff);
     spotLight.position.set(5.6, 23.1, 5.4);
+    // spotLight.position.set(0, 2, 0);
     spotLight.rotation.set(-0.8, 42.7, 19.5);
     spotLight.castShadow = true;
     scene.add(spotLight);
@@ -88,11 +87,11 @@ function init() {
     window.addEventListener('resize', onResize, false);
 }
 function onResize() {
-    camera.aspect = CScreen.RATIO;
-    //camera.aspect = window.innerWidth / window.innerHeight;
+    //   camera.aspect = CScreen.RATIO;
+    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    //renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setSize(CScreen.WIDTH, CScreen.HEIGHT);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    // renderer.setSize(CScreen.WIDTH, CScreen.HEIGHT);
 }
 function addControl(controlObject) {
     gui.add(controlObject, 'rotationSpeed', -0.5, 0.5);
@@ -118,15 +117,15 @@ function gameLoop() {
 function setupRenderer() {
     renderer = new Renderer();
     renderer.setClearColor(0xEEEEEE, 1.0);
-    renderer.setSize(CScreen.WIDTH, CScreen.HEIGHT);
-    //renderer.setSize(window.innerWidth, window.innerHeight);
+    //renderer.setSize(CScreen.WIDTH, CScreen.HEIGHT);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
     console.log("Finished setting up Renderer...");
 }
 // Setup main camera for the scene
 function setupCamera() {
-    camera = new PerspectiveCamera(45, config.Screen.RATIO, 0.1, 1000);
-    //camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    //  camera = new PerspectiveCamera(45, config.Screen.RATIO, 0.1, 1000);
+    camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.x = 0.6;
     camera.position.y = 16;
     camera.position.z = -20.5;
