@@ -6,7 +6,6 @@ var Renderer = THREE.WebGLRenderer;
 var PerspectiveCamera = THREE.PerspectiveCamera;
 var BoxGeometry = THREE.BoxGeometry;
 var CubeGeometry = THREE.CubeGeometry;
-var PlaneGeometry = THREE.PlaneGeometry;
 var SphereGeometry = THREE.SphereGeometry;
 var Geometry = THREE.Geometry;
 var AxisHelper = THREE.AxisHelper;
@@ -33,7 +32,6 @@ var camera;
 var axes;
 var cube;
 var childCube;
-var plane;
 var sphere;
 var ambientLight;
 var spotLight;
@@ -43,6 +41,11 @@ var stats;
 var step = 0;
 var cubeGeometry;
 var cubeMaterial;
+var emptyObject;
+var firstPlanet;
+var secondPlanet;
+var thirdPlanet;
+var fourthPlanet;
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -53,16 +56,37 @@ function init() {
     scene.add(axes);
     console.log("Added Axis Helper to scene...");
     //Add a sphere to the Scene
-    cube = new gameObject(new SphereGeometry(2, 50, 50), new LambertMaterial({ color: 0x00ff00 }), 0, 2, 0);
+    cube = new gameObject(new CubeGeometry(2, 2, 2), //new gameObject(new SphereGeometry(2, 50, 50),
+    new LambertMaterial({ color: 0x00ff00 }), 0, 2, 0);
     cube.castShadow = true;
     cube.receiveShadow = true;
     scene.add(cube);
     console.log("Added sphere Primitive to scene...");
-    childCube = new gameObject(new SphereGeometry(0.5, 50, 50), new LambertMaterial({ color: 0xff0000 }), 5, 1, 0);
+    emptyObject = new Object3D();
+    emptyObject.position.set(0, 0, 0);
+    cube.add(emptyObject);
+    console.log("Added empty object to cube Primitive...");
+    firstPlanet = new gameObject(new SphereGeometry(0.7, 50, 50), new LambertMaterial({ color: 0xff0000 }), 6, 1, 0);
+    firstPlanet.castShadow = true;
+    firstPlanet.receiveShadow = true;
+    emptyObject.add(firstPlanet);
+    console.log("Added first planet to scene...");
+    secondPlanet = new gameObject(new SphereGeometry(0.3, 50, 50), new LambertMaterial({ color: 0xff0000 }), 3, 1, 0);
+    secondPlanet.castShadow = true;
+    secondPlanet.receiveShadow = true;
+    emptyObject.add(secondPlanet);
+    console.log("Added second planet to scene...");
+    childCube = new gameObject(new CubeGeometry(0.5, 0.5, 0.5), //new gameObject(new SphereGeometry(0.5, 50, 50),
+    new LambertMaterial({ color: 0xff0000 }), 3.5, 1, 0);
     childCube.castShadow = true;
     childCube.receiveShadow = true;
-    cube.add(childCube);
+    secondPlanet.add(childCube);
     console.log("Added Child Cube Primitive to scene...");
+    thirdPlanet = new gameObject(new SphereGeometry(0.2, 50, 50), new LambertMaterial({ color: 0xff0000 }), 9, 1, 0);
+    thirdPlanet.castShadow = true;
+    thirdPlanet.receiveShadow = true;
+    emptyObject.add(thirdPlanet);
+    console.log("Added third planet to scene...");
     // Add an AmbientLight to the scene
     ambientLight = new AmbientLight(0x090909);
     scene.add(ambientLight);
@@ -70,7 +94,6 @@ function init() {
     // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff);
     spotLight.position.set(5.6, 23.1, 5.4);
-    // spotLight.position.set(0, 2, 0);
     spotLight.rotation.set(-0.8, 42.7, 19.5);
     spotLight.castShadow = true;
     scene.add(spotLight);
@@ -83,7 +106,7 @@ function init() {
     addStatsObject();
     console.log("Added Stats to scene...");
     document.body.appendChild(renderer.domElement);
-    gameLoop(); // render the scene	
+    gameLoop(); // render the scene	    
     window.addEventListener('resize', onResize, false);
 }
 function onResize() {
@@ -107,8 +130,9 @@ function addStatsObject() {
 // Setup main game loop
 function gameLoop() {
     stats.update();
-    cube.rotation.y += control.rotationSpeed;
-    // render using requestAnimationFrame
+    emptyObject.rotation.y += 0.05;
+    secondPlanet.rotation.y += 0.025;
+    //   childCube.rotation.z+=0.05;
     requestAnimationFrame(gameLoop);
     // render the scene
     renderer.render(scene, camera);
