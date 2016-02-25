@@ -54,6 +54,7 @@ var fourthPlanetEmptyObject;
 var moon;
 var fifthPlanet;
 var fifthPlanetEmptyObject;
+var moonTwo;
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -66,6 +67,7 @@ function init() {
     //Add a sun to the Scene
     sun = new gameObject(new SphereGeometry(10, 30, 30), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/sun.jpg') }), 0, 0, 0);
     sun.receiveShadow = false;
+    sun.castShadow = false;
     scene.add(sun);
     console.log("Added sun to scene...");
     //add pointlight to the sun
@@ -78,8 +80,7 @@ function init() {
     scene.add(firstPlanetEmptyObject);
     console.log("Added first empty object to sun...");
     //Add first planet to scene 
-    firstPlanet = new gameObject(new SphereGeometry(4, 32, 32, 0.05), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/redPlanet.jpg') }), 10, 2, 20);
-    firstPlanet.castShadow = true;
+    firstPlanet = new gameObject(new SphereGeometry(4, 32, 32, 0.05), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/firstPlanet.jpg') }), 10, 2, 20);
     firstPlanetEmptyObject.add(firstPlanet);
     console.log("Added first planet to scene...");
     //Add an empty object for the second planet to the scene
@@ -88,14 +89,11 @@ function init() {
     sun.add(secondPlanetEmptyObject);
     console.log("Added second empty object to sun...");
     //add second planet to the scene
-    secondPlanet = new gameObject(new SphereGeometry(4, 32, 32), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/bluePlanet.jpg') }), 30, 2, 30);
-    secondPlanet.castShadow = true;
+    secondPlanet = new gameObject(new SphereGeometry(4, 32, 32), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/secondPlanet.jpg') }), 30, 2, 30);
     secondPlanetEmptyObject.add(secondPlanet);
     console.log("Added second planet to scene...");
     //add moon to the second planet
     moon = new gameObject(new SphereGeometry(1.25, 32, 32), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/moon.jpg') }), 6, 0, 4);
-    moon.receiveShadow = true;
-    moon.castShadow = true;
     secondPlanet.add(moon);
     console.log("Added planet moon to scene...");
     //Add an empty object for the third planet to the scene
@@ -104,7 +102,7 @@ function init() {
     scene.add(thirdPlanetEmptyObject);
     console.log("Added third empty object to sun...");
     //add third planet to the scene
-    thirdPlanet = new gameObject(new SphereGeometry(3.5, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/ukrPlanet.jpg') }), 45, 2, 40);
+    thirdPlanet = new gameObject(new SphereGeometry(3.5, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/thirdPlanet.jpg') }), 45, 2, 40);
     thirdPlanetEmptyObject.add(thirdPlanet);
     console.log("Added third planet to scene...");
     //Add an empty object for the fourth planet to the scene
@@ -113,7 +111,7 @@ function init() {
     scene.add(fourthPlanetEmptyObject);
     console.log("Added fourth empty object to sun...");
     //add fourth planet to the scene
-    fourthPlanet = new gameObject(new SphereGeometry(3.9, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/livePlanet.jpg') }), 53, 2, 44);
+    fourthPlanet = new gameObject(new SphereGeometry(3.9, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/fourthPlanet.jpg') }), 53, 2, 44);
     fourthPlanetEmptyObject.add(fourthPlanet);
     console.log("Added fourth planet to scene...");
     //Add an empty object for the fifth planet to the scene
@@ -122,9 +120,13 @@ function init() {
     scene.add(fifthPlanetEmptyObject);
     console.log("Added fifth empty object to sun...");
     //add fifth planet to the scene
-    fifthPlanet = new gameObject(new SphereGeometry(4.5, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/redPlanet.jpg') }), 65, 2, 55);
+    fifthPlanet = new gameObject(new SphereGeometry(4.5, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/fifthPlanet.jpg') }), 65, 2, 55);
     fifthPlanetEmptyObject.add(fifthPlanet);
     console.log("Added fifth planet to scene...");
+    //add moon to the fifth planet
+    moonTwo = new gameObject(new SphereGeometry(1.25, 32, 32), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/moonTwo.png') }), 8, 0, 4);
+    fifthPlanet.add(moon);
+    console.log("Added planet moon to scene...");
     // Add an AmbientLight to the scene
     ambientLight = new AmbientLight(0x404040);
     scene.add(ambientLight);
@@ -166,7 +168,9 @@ function addStatsObject() {
 // Setup main game loop
 function gameLoop() {
     stats.update();
+    //rotate the sun
     sun.rotation.y += 0.02;
+    //rotate planets
     firstPlanetEmptyObject.rotation.y += 0.05;
     firstPlanet.rotation.y += 0.035;
     secondPlanetEmptyObject.rotation.y += 0.025;
@@ -174,10 +178,12 @@ function gameLoop() {
     thirdPlanet.rotation.y += 0.07;
     thirdPlanetEmptyObject.rotation.y += -0.02;
     fourthPlanet.rotation.y += 0.1;
-    fourthPlanetEmptyObject.rotation.y += 0.045;
+    fourthPlanetEmptyObject.rotation.y += 0.05;
     fifthPlanet.rotation.y += 0.3;
-    fifthPlanetEmptyObject.rotation.y += 0.065;
+    fifthPlanetEmptyObject.rotation.y += 0.018;
+    //rotate moon
     moon.rotation.y += 0.1;
+    moonTwo.rotation.y -= 0.045;
     //   childCube.rotation.z+=0.05;
     requestAnimationFrame(gameLoop);
     // render the scene
@@ -186,7 +192,7 @@ function gameLoop() {
 // Setup default renderer
 function setupRenderer() {
     renderer = new Renderer();
-    renderer.setClearColor(0xffffff, 1.0);
+    renderer.setClearColor(0x191919, 1.0);
     //renderer.setSize(CScreen.WIDTH, CScreen.HEIGHT);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;

@@ -17,7 +17,7 @@ var objects;
             this.position.y = y;
             this.position.z = z;
             this.receiveShadow = true;
-            this.castShadow = false;
+            this.castShadow = true;
         }
         return gameObject;
     })(THREE.Mesh);
