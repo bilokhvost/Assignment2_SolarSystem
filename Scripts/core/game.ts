@@ -27,6 +27,7 @@ import Face3 = THREE.Face3;
 import Point = objects.Point;
 import CScreen = config.Screen;
 
+
 //Custom Game Objects
 import gameObject = objects.gameObject;
 
@@ -34,7 +35,7 @@ var scene: Scene;
 var renderer: Renderer;
 var camera: PerspectiveCamera;
 var axes: AxisHelper;
-var cube: Mesh;
+//var cube: Mesh;
 var childCube: Mesh;
 var sphere: Mesh;
 var ambientLight: AmbientLight;
@@ -46,11 +47,13 @@ var step: number = 0;
 var cubeGeometry: CubeGeometry;
 var cubeMaterial: LambertMaterial;
 var emptyObject: Object3D;
+var sun: Mesh;
+var pointLight:PointLight;
 
-var firstPlanet:Mesh;
-var secondPlanet:Mesh;
-var thirdPlanet:Mesh;
-var fourthPlanet:Mesh;
+var firstPlanet: Mesh;
+var secondPlanet: Mesh;
+var thirdPlanet: Mesh;
+var fourthPlanet: Mesh;
 
 function init() {
     // Instantiate a new Scene object
@@ -66,48 +69,48 @@ function init() {
     console.log("Added Axis Helper to scene...");
    
  
-    //Add a sphere to the Scene
-    cube = new gameObject(new CubeGeometry (2,2,2), //new gameObject(new SphereGeometry(2, 50, 50),
-        new LambertMaterial({ color: 0x00ff00 }),
-        0, 2, 0);
-    cube.castShadow = true;
-    cube.receiveShadow = true;
-
-    scene.add(cube);
-    console.log("Added sphere Primitive to scene...");
-
-    emptyObject=new Object3D();
-    emptyObject.position.set(0,0,0);
-    cube.add(emptyObject);
-    console.log("Added empty object to cube Primitive...");
-
-   
+    //Add a sun to the Scene
+    sun = new gameObject(new SphereGeometry(10, 30, 30),
+        new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/sun.jpg') }),
+        0, 0, 0);
+    scene.add(sun);
+    console.log("Added sun to scene...");
     
-        firstPlanet =new gameObject(new SphereGeometry(0.7, 50, 50),
+    //add pointlight to the sun
+    pointLight = new THREE.PointLight(0xffffff, 100, 100);
+    sun.add(pointLight);
+
+    //Add an empty object to the scene
+    emptyObject = new Object3D();
+    emptyObject.position.set(0, 0, 0);
+    sun.add(emptyObject);
+    console.log("Added empty object to sun...");
+
+    //Add planets to scene 
+    firstPlanet = new gameObject(new SphereGeometry(4, 30, 30),
+       // new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/redPlanet.jpg') }),
         new LambertMaterial({ color: 0xff0000 }),
-        6, 1, 0);
-    firstPlanet.castShadow = true;
+        10, 5, 20 );
     firstPlanet.receiveShadow = true;
     emptyObject.add(firstPlanet);
     console.log("Added first planet to scene...");
-    
-       secondPlanet = new gameObject(new SphereGeometry(0.3, 50, 50),
-        new LambertMaterial({ color: 0xff0000 }),
-        3, 1, 0);
-    secondPlanet.castShadow = true;
+
+    secondPlanet = new gameObject(new SphereGeometry(3, 30, 30),
+        new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/bluePlanet.jpg') }),
+        30, 5, 30);
     secondPlanet.receiveShadow = true;
     emptyObject.add(secondPlanet);
     console.log("Added second planet to scene...");
-    
-     childCube = new gameObject(new CubeGeometry (0.5,0.5,0.5),//new gameObject(new SphereGeometry(0.5, 50, 50),
+
+    childCube = new gameObject(new SphereGeometry(0.5, 50, 50),
         new LambertMaterial({ color: 0xff0000 }),
         3.5, 1, 0);
     childCube.castShadow = true;
     childCube.receiveShadow = true;
     secondPlanet.add(childCube);
-    console.log("Added Child Cube Primitive to scene...");
-    
-        thirdPlanet = new gameObject(new SphereGeometry(0.2, 50, 50),
+    console.log("Added planet moon to scene...");
+
+    thirdPlanet = new gameObject(new SphereGeometry(0.2, 50, 50),
         new LambertMaterial({ color: 0xff0000 }),
         9, 1, 0);
     thirdPlanet.castShadow = true;
@@ -116,24 +119,28 @@ function init() {
     console.log("Added third planet to scene...");
     
     // Add an AmbientLight to the scene
-    ambientLight = new AmbientLight(0x090909);
+    ambientLight = new AmbientLight(0x0c0c0c);
     scene.add(ambientLight);
     console.log("Added an Ambient Light to Scene");
+
 	
     // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff);
-    spotLight.position.set(5.6, 23.1, 5.4);
-    spotLight.rotation.set(-0.8, 42.7, 19.5);
+    spotLight.position.set (-70, 10, 100);
+    //spotLight.rotation.set(-0.8, 42.7, 19.5);
     spotLight.castShadow = true;
     scene.add(spotLight);
     console.log("Added a SpotLight Light to Scene");
+   
     // add controls
     gui = new GUI();
     control = new Control(0.05);
     addControl(control);
+    
     // Add framerate stats
     addStatsObject();
     console.log("Added Stats to scene...");
+    
     document.body.appendChild(renderer.domElement);
     gameLoop(); // render the scene	    
     window.addEventListener('resize', onResize, false);
@@ -164,8 +171,8 @@ function addStatsObject() {
 function gameLoop(): void {
     stats.update();
     emptyObject.rotation.y += 0.05;
-   secondPlanet.rotation.y+=0.025;
- //   childCube.rotation.z+=0.05;
+    secondPlanet.rotation.y += 0.025;
+    //   childCube.rotation.z+=0.05;
     requestAnimationFrame(gameLoop);
 	
     // render the scene
@@ -175,7 +182,7 @@ function gameLoop(): void {
 // Setup default renderer
 function setupRenderer(): void {
     renderer = new Renderer();
-    renderer.setClearColor(0xEEEEEE, 1.0);
+    renderer.setClearColor(0x000000, 1.0);
     //renderer.setSize(CScreen.WIDTH, CScreen.HEIGHT);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.shadowMap.enabled = true;
@@ -186,9 +193,9 @@ function setupRenderer(): void {
 function setupCamera(): void {
     //  camera = new PerspectiveCamera(45, config.Screen.RATIO, 0.1, 1000);
     camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.x = 0.6;
-    camera.position.y = 16;
-    camera.position.z = -20.5;
+    camera.position.x = -75;
+    camera.position.y = 80;
+    camera.position.z = 125;
     camera.lookAt(new Vector3(0, 0, 0));
     console.log("Finished setting up Camera...");
 }
