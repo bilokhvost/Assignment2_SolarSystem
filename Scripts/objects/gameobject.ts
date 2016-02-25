@@ -5,6 +5,7 @@ module objects {
         //PRIVATE INSTANCE VARIABLES +++++++++++++++++++++++++++++++++++++
         private _geometry: THREE.Geometry;
         private _material: THREE.Material;
+        
         //CONSTRUCTOR ++++++++++++++++++++++++++++++++++++++++++++++++++++
         constructor(geometry: THREE.Geometry, material: THREE.Material, x:number, y:number, z:number) {
             super(geometry, material);
@@ -13,7 +14,7 @@ module objects {
             this.position.x = x;
             this.position.y = y;
             this.position.z = z;
-            this.receiveShadow = false;
+            this.receiveShadow = true;
             this.castShadow = false;
         }
     }

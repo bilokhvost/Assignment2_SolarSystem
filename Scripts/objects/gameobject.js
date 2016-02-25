@@ -16,7 +16,7 @@ var objects;
             this.position.x = x;
             this.position.y = y;
             this.position.z = z;
-            this.receiveShadow = false;
+            this.receiveShadow = true;
             this.castShadow = false;
         }
         return gameObject;
