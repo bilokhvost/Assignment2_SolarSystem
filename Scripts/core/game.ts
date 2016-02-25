@@ -63,6 +63,8 @@ var fifthPlanet: Mesh;
 var fifthPlanetEmptyObject: Object3D;
 var moonTwo:Mesh;
 
+var zoom: boolean;
+
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -185,7 +187,7 @@ function init() {
     
     // add controls
     gui = new GUI();
-    control = new Control(0.05);
+    control = new Control();
     addControl(control);
     
     // Add framerate stats
@@ -204,7 +206,8 @@ function onResize(): void {
 }
 
 function addControl(controlObject: Control): void {
-    gui.add(controlObject, 'rotationSpeed', -0.5, 0.5);
+    gui.add(controlObject, 'zoomIn');
+    gui.add(controlObject, 'zoomOut');
 }
 
 function addStatsObject() {

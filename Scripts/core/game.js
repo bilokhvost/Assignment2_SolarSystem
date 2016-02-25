@@ -55,6 +55,7 @@ var moon;
 var fifthPlanet;
 var fifthPlanetEmptyObject;
 var moonTwo;
+var zoom;
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -140,7 +141,7 @@ function init() {
     console.log("Added a SpotLight Light to Scene");
     // add controls
     gui = new GUI();
-    control = new Control(0.05);
+    control = new Control();
     addControl(control);
     // Add framerate stats
     addStatsObject();
@@ -155,7 +156,8 @@ function onResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 function addControl(controlObject) {
-    gui.add(controlObject, 'rotationSpeed', -0.5, 0.5);
+    gui.add(controlObject, 'zoomIn');
+    gui.add(controlObject, 'zoomOut');
 }
 function addStatsObject() {
     stats = new Stats();
