@@ -6,15 +6,18 @@ var objects;
         function Control() {
         }
         //PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++
-        Control.prototype.zoomIn = function () {
-            camera.position.set(secondPlanet.position.x - 25, secondPlanet.position.y + 25, secondPlanet.position.z + 25);
-            camera.lookAt(secondPlanet.position);
-            zoom = true;
+        Control.prototype.zoomInFront = function () {
+            camera.position.set(-70, 50, 15);
+            camera.lookAt(sun.position);
+        };
+        Control.prototype.zoomInBack = function () {
+            camera.position.set(100, 10, 150);
+            fifthPlanetEmptyObject.add(camera);
+            camera.lookAt(fifthPlanet.position);
         };
         Control.prototype.zoomOut = function () {
-            camera.position.set(-100, 100, 100);
+            camera.position.set(-75, 80, 200);
             camera.lookAt(scene.position);
-            zoom = false;
         };
         return Control;
     })();

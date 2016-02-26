@@ -5,16 +5,20 @@ module objects {
     export class Control { 
         
         //PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++
-          public zoomIn(): void {
-             camera.position.set(secondPlanet.position.x - 25, secondPlanet.position.y + 25, secondPlanet.position.z + 25);
-             camera.lookAt(secondPlanet.position);
-             zoom = true;
+          public zoomInFront(): void {
+             camera.position.set(-70, 50, 15);
+             camera.lookAt(sun.position);
+         }
+         
+          public zoomInBack(): void {
+             camera.position.set(100, 10, 150);
+             fifthPlanetEmptyObject.add(camera);
+             camera.lookAt(fifthPlanet.position);
          }
         
          public zoomOut(): void {
-             camera.position.set(-100, 100, 100);
+             camera.position.set(-75, 80, 200);
              camera.lookAt(scene.position);
-             zoom = false;
          }
     }
 }
