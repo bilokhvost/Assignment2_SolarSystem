@@ -33,6 +33,7 @@ var objects;
         };
         Control.prototype.zoomOut = function () {
             camera.position.set(-75, 80, 200);
+            scene.add(camera);
             camera.lookAt(scene.position);
         };
         return Control;
