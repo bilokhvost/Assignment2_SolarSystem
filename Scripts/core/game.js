@@ -1,3 +1,19 @@
+/*game.ts
+Kateryna Bilokhvost
+Last Modified by: Kateryna Bilokhvost
+Date last Modified: Feb 20, 2016
+This is a program for solar system display.
+The following controls are available: zoomInFront(pointing to sun), zoomInBack (pointing to the fifth planet), and zoomOut - returns camera to the basic position
+Revision History:
+  Created initial file
+  added a sun and a planet
+  added four planetsadded light, textures
+  fixed rotation issues
+  added more planets
+  updated images
+  added zooming functionality
+  added comments to code
+*/
 /// <reference path="_reference.ts"/>
 // MAIN GAME FILE
 // THREEJS Aliases
@@ -90,7 +106,7 @@ function init() {
     scene.add(secondPlanetEmptyObject);
     console.log("Added second empty object to sun...");
     //add second planet to the scene
-    secondPlanet = new gameObject(new SphereGeometry(4, 32, 32), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/secondPlanet.jpg') }), 40, 2, 30);
+    secondPlanet = new gameObject(new SphereGeometry(4, 32, 32), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/secondPlanet.jpg') }), 40, 2, 40);
     secondPlanetEmptyObject.add(secondPlanet);
     console.log("Added second planet to scene...");
     moonEmptyObject = new Object3D();
@@ -107,7 +123,7 @@ function init() {
     scene.add(thirdPlanetEmptyObject);
     console.log("Added third empty object to sun...");
     //add third planet to the scene
-    thirdPlanet = new gameObject(new SphereGeometry(3.5, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/thirdPlanet.jpg') }), 55, 2, 40);
+    thirdPlanet = new gameObject(new SphereGeometry(3.5, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/thirdPlanet.jpg') }), 55, 2, 55);
     thirdPlanetEmptyObject.add(thirdPlanet);
     console.log("Added third planet to scene...");
     //Add an empty object for the fourth planet to the scene
@@ -116,7 +132,7 @@ function init() {
     scene.add(fourthPlanetEmptyObject);
     console.log("Added fourth empty object to sun...");
     //add fourth planet to the scene
-    fourthPlanet = new gameObject(new SphereGeometry(3.9, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/fourthPlanet.jpg') }), 70, 2, 44);
+    fourthPlanet = new gameObject(new SphereGeometry(3.9, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/fourthPlanet.jpg') }), 80, 2, 80);
     fourthPlanetEmptyObject.add(fourthPlanet);
     console.log("Added fourth planet to scene...");
     //Add an empty object for the fifth planet to the scene
@@ -125,7 +141,7 @@ function init() {
     scene.add(fifthPlanetEmptyObject);
     console.log("Added fifth empty object to sun...");
     //add fifth planet to the scene
-    fifthPlanet = new gameObject(new SphereGeometry(4.5, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/fifthPlanet.jpg') }), 90, 2, 55);
+    fifthPlanet = new gameObject(new SphereGeometry(4.5, 50, 50), new LambertMaterial({ map: THREE.ImageUtils.loadTexture('../Assets/images/fifthPlanet.jpg') }), 90, 2, 90);
     fifthPlanetEmptyObject.add(fifthPlanet);
     console.log("Added fifth planet to scene...");
     //add moon to the fifth planet
